@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation  } from "react-router-dom";
+
 // import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
@@ -11,18 +12,26 @@ import EditStudent from "./pages/EditStudent";
 import ProtectedRoute from "./componants/ProtectedRoute";
 import StudentDashboard from "./pages/StudentDashboard";
 import Footer from "./componants/Footer";
-// import StudentDashboard from "./pages/StudentDashboard";
+import AdminLogin from "./pages/AdminLogin";
+import StudentProtectedRoute from "./componants/StudentProtectedRoute";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
+  const location = useLocation();
+
+const hideLayout =
+  location.pathname === "/admin-login" ||
+  location.pathname === "/admin" ||
+  location.pathname.startsWith("/edit/");
   return (
     <>
-      <Navbar />
-      
+      {!hideLayout && <Navbar />}
 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
-        {/* <Route path="/admin" element={<Admin />} /> */}
+        <Route path="/admin-login" element={<AdminLogin />} />
         <Route
           path="/admin"
           element={
@@ -31,12 +40,20 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/student-dashboard" element={<StudentDashboard />} />
+        <Route
+          path="/student-dashboard"
+          element={
+            <StudentProtectedRoute>
+              <StudentDashboard />
+            </StudentProtectedRoute>
+          }
+        />
         <Route path="/student/:id" element={<StudentDetails />} />
         <Route path="/login" element={<Login />} />
         <Route path="/edit/:id" element={<EditStudent />} />
       </Routes>
-      <Footer />
+      {!hideLayout && <Footer />}
+        <ToastContainer />
     </>
   );
 }

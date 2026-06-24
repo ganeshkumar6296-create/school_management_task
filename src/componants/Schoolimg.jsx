@@ -1,6 +1,6 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -22,8 +22,8 @@ const Schoolimg = () => {
       </h2>
 
       <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
-        navigation
+        modules={[ Pagination, Autoplay]}
+
         pagination={{ clickable: true }}
         autoplay={{
           delay: 3000,
